@@ -69,7 +69,6 @@
 		АвторизацияSMS.Подпись); 
 		
 	HTTPЗапрос = Новый HTTPЗапрос(АвторизацияSMS.URL, АвторизацияSMS.Заголовки);
-	HTTPЗапрос.АдресРесурса = АвторизацияSMS.URL;
 	HTTPЗапрос.УстановитьТелоИзСтроки(ТелоЗапроса);
 
 	HTTP = Новый HTTPСоединение(ИмяСервера);
@@ -136,7 +135,7 @@
 		АвторизацияSMS.Вставить("Заголовки", Заголовки);
 
 	ИначеЕсли КодОператора = ДоступныеОператорыSMS().sms4b Тогда
-		
+
 		Заголовки = Новый Соответствие;
 		Заголовки.Вставить("Accept-Encoding", "gzip,deflate");
 		Заголовки.Вставить("Content-Type", "text/xml;charset=UTF-8");
@@ -229,19 +228,19 @@
 
 Функция ПолучитьШаблонТелаЗапросаSms4b()
 
-	   Возврат 
-	   "<soapenv:Envelope xmlns:soapenv=" + Символ(34) + "http://schemas.xmlsoap.org/soap/envelope/" + Символ(34) + " xmlns:sms="+Символ(34)+"SMS4B"+Символ(34)+">
-   	   |<soapenv:Header/>
-   	   |<soapenv:Body>
-       |<sms:SendSMS>
-       |<sms:Login>%1</sms:Login>
-       |<sms:Password>%2</sms:Password>
-       |<sms:Source>%5</sms:Source>
-       |<sms:Phone>%3</sms:Phone>
-       |<sms:Text>%4</sms:Text>
-       |</sms:SendSMS>
-   	   |</soapenv:Body>
-       |</soapenv:Envelope>";		
+	 Возврат 
+		"<soapenv:Envelope xmlns:soapenv=" + Символ(34) + "http://schemas.xmlsoap.org/soap/envelope/" + Символ(34) + " xmlns:sms="+Символ(34)+"SMS4B"+Символ(34)+">
+		|<soapenv:Header/>
+		|<soapenv:Body>
+		|<sms:SendSMS>
+		|<sms:Login>%1</sms:Login>
+		|<sms:Password>%2</sms:Password>
+		|<sms:Source>%5</sms:Source>
+		|<sms:Phone>%3</sms:Phone>
+		|<sms:Text>%4</sms:Text>
+		|</sms:SendSMS>
+		|</soapenv:Body>
+		|</soapenv:Envelope>";		
 
 КонецФункции
 
