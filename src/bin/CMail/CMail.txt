@@ -1,0 +1,217 @@
+Inveigle.net CMail Version 0.7.7 (No SSL), Nov 11 2016
+
+Use "cmail /?" for help.
+
+MANDATORY OPTIONS 
+
+-host:[user:pass@]host[:port]  Specifies the SMTP server to be used to deliver 
+                               the message. A username and password may 
+                               optionally be specified for SMTP authentication.
+                               Supported mechanisms are CRAM-MD5, PLAIN, and 
+                               LOGIN (in order of preference). This setting 
+                               cannot be used with -file. 
+
+-file:filename                 Specifies a file name to write the constructed 
+                               e-mail message to instead of sending it via 
+                               SMTP. This setting cannot be used with -host. 
+
+-from:address[:alias]          Specifies the e-mail address, with optional 
+                               alias, to appear in the 'From' header of the 
+                               message. This setting is required. 
+
+RECIPIENTS 
+
+-to:address[:alias[:DSN]]      Adds a recipient to appear in the 'To' field of 
+                               the message. This setting may be specified 
+                               multiple times. See 'Recipient Management' for 
+                               more information. 
+
+-cc:address[:alias[:DSN]]      As above, for CC recipients. 
+
+-bcc:address[::DSN]            As above, for BCC recipients. 
+
+-reply-to:address[:alias]      Specifies the e-mail address to which replies 
+                               should be sent. 
+
+CONTENT CONTROL 
+
+-subject:subject text          Specifies the message subject (literal string). 
+
+-body:message body             Specifies the message body. Note: 
+                               '\\','\r','\n', and '\t' are valid escape codes.
+
+-body-file:filename            Specifies a file containing the message body. 
+
+-body-64                       Use base64 encoding for the message body. 
+
+-body-qp                       Use quoted-printable encoding for the message 
+                               body. 
+
+-body-html:filename            Specifies a file name containing a UTF-8 encoded
+                               HTML body. Attached images can be referred to 
+                               using their Content-ID if attached using -ai. 
+
+-charset:charset               Specifies the character set for the plain 
+                               message body. The default is US-ASCII. Implies 
+                               -mime. 
+
+-head:header:value             Add the specified header and header value to the
+                               message. This option may be specified multiple 
+                               times. E.g. -head:X-No-Archive:Yes. 
+
+-mime                          Force use of MIME for the message body in 
+                               messages having no attachments. 
+
+-priority:n                    Set the message priority to 'n', 1 = Highest, 2 
+                               = High, 4 = Low, 5 = Lowest. This is simply a 
+                               shortcut to set the widely supported X-Priority 
+                               header. 
+
+-smtp-transparency             When writing output to files, this repeats the 
+                               first character on the line if it is '.'. Use 
+                               this if the output files are to be sent via an 
+                               SMTP server without further interpretation. 
+
+--                             Read message body from stdin. 
+
+ATTACHMENTS 
+
+-a:filename                    Attach the specified file. CMail will select 
+                               base64 or quoted-printable encoding 
+                               automatically. Files containing >85% ASCII text 
+                               in the first 4kB will be quoted-printable 
+                               encoded. 
+
+-a64:filename                  Attach the specified file using base64 encoding.
+
+-aqp:filename                  Attach the specified file using quoted-printable
+                               encoding. 
+
+-ai:filename                   Creates an inline (multipart/related) 
+                               attachment, usually used for images referenced 
+                               in a HTML message body. The Content-ID is based 
+                               on the file name (URL encoded) and from domain, 
+                               with the resulting URL in the form 
+                               cid:image.jpg@example.com. Requires -body-html. 
+
+-auu:filename                  Attach the specified file using uuencoding. 
+                               These attachments are encoded within the message
+                               body. 
+
+-ayenc:filename                Attach the specified file using yEnc encoding. 
+                               Note, yEnc encoding will most likely result in 
+                               RFC violations in the output stream and should 
+                               never be used on public mail systems. These 
+                               attachments are encoded within the message body.
+
+-awild:options:pattern[/...]   Attach multiple files matching one or more 
+                               patterns. See 'Wildcard Attachments' below. 
+
+DELIVERY STATUS NOTIFICATION (DSN) / MESSAGE DISPOSITION NOTIFICATION (MDN) 
+
+-dsn:options                   Specifies the default DSN types to request if no
+                               DSN settings are specified for the recipient, 
+                               using the first letter of each DSN type. 
+                               Acceptable values are (S)uccess, (F)ailure, 
+                               (D)elay, and (N)ever. E.g. -dsn:SFD will request
+                               a DSN for success, failure and delay. If (N)ever
+                               is included in the list, it will take precedence
+                               over all other values. 
+
+-dsnid:id                      Sets the envelope ID for DSN requests. This ID 
+                               is included in any DSN responses from mail 
+                               servers. If not set, a random ID will be used. 
+
+-mdn                           Request MDN (read receipt). 
+
+CONNECTION CONTROL 
+
+-4                             Force the use of IPv4. 
+
+-6                             Force the use of IPv6. 
+
+-authtypes:type[,type...]      A comma-separated list of authentication types 
+                               which may be used with the upstream server. 
+                               Supported values are CRAM-MD5, PLAIN, and LOGIN.
+
+-helo:hostname                 Use the specified hostname in HELO/EHLO. 
+
+-proxy:[user:pass@]host[:port] Connect via a proxy. Authentication is only 
+                               supported for HTTPS proxies. 
+
+-proxytype:type                Specify the type of proxy being connected to. 
+                               Supported proxy types are SOCKS (default proxy 
+                               type, default port 1080), and HTTPS (default 
+                               port 8080). 
+
+DEBUGGING 
+
+-d                             Debug mode, show data to and from the server. 
+
+COMMAND LINE ONLY 
+
+-config:filename               Apply the configuration from the specified file.
+
+-nodefault                     Do not apply settings from the default 
+                               cmail.conf. 
+
+-skipnofile                    By default CMail checks attachments exist before
+                               sending the e-mail, and exits if they do not. 
+                               This option disables this check. Note that 
+                               e-mail will still be sent even if one or more 
+                               attachments is deleted after this check, as 
+                               CMail dynamically creates messages during the 
+                               SMTP session. 
+
+CONFIGURATION 
+
+CMail applies configuration options from a default configuration file, a 
+command line specified configuration file, and from the command line itself, in
+that order. Settings for which multiple values can be assigned (E.g. to) are 
+ADDED from each configuration. For settings that can only be specified once, 
+the last occurance will be used. I.e. You can specify a default configuration 
+in cmail.conf, and overide settings for individual messages by specifying 
+another config file, or via the command line. 
+
+The default configuration is stored in %APPDATA%\cmail.conf. 
+
+Configuration files must contain one setting per line, and do not include the 
+'-' prefix. 
+
+RECIPIENT MANAGEMENT 
+
+The -to, -cc, and -bcc settings each add a recipient to the message. These 
+settings each take one to three parameters. The first specifies the e-mail 
+address, and is required. The second parameter can be used to specify an alias,
+usually the name of the recipient. The alias may be quoted (using double 
+quotes, escaped as necessary), although this is only required where a colon may
+be present in the alias. The final parameter specifies DSN options for the 
+recipent, using the same format as the -dsn option documented above. E.g. 
+-to:user@example.com:"Example User":DF. Where an alias is not desired (or not 
+applicable in the case of BCC), this field may be left blank. E.g. 
+-bcc:user@example.com::SFD. 
+
+WILDCARD ATTACHMENTS 
+
+CMail supports adding multiple attachments from a source directory using 
+patterns. Multiple patterns may be specified, separated by '/', and are 
+evaluated from left to right. Patterns may include standard wildcard characters
+'*' or '?', and character sets and ranges [], and may be prefixed with a 
+logical NOT operator '!'. In addition to the patterns, a number of options are 
+available to modify the behaviour. 
+
+Options: (Case sensitive) 
+
+H - Include hidden files 
+S - Include system files 
+A - Include ONLY files with the Archive attribute set 
+R - Recursive (include files in subdirectories) 
+C - Case sensitive matching 
+U - Use uuencoding 
+6 - Use base64 encoding 
+Q - Use quoted-printable encoding 
+I - Create inline attachments for use with -body-html 
+
+E.g. To recursively include logs from 1970, but exclude any .tmp files, you 
+could do the following -awild:R:c:\logs\1970*/!*.tmp 
+
