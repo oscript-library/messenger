@@ -1,5 +1,7 @@
 ﻿# Отправка сообщений используя разные транспорты
 
+[![GitHub release](https://img.shields.io/github/release/oscript-library/messenger.svg)](https://github.com/oscript-library/messenger)
+
 ## Введение
 
 ## Установка
