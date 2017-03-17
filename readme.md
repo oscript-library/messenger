@@ -1,4 +1,4 @@
-﻿# Отправка сообщений используя разные транспорты
+# Отправка сообщений используя разные транспорты
 
 [![GitHub release](https://img.shields.io/github/release/oscript-library/messenger.svg)](https://github.com/oscript-library/messenger)
 
@@ -29,7 +29,7 @@
 например для `https://gitter.im/asosnoviy/Lobby` имя комнаты `asosnoviy/Lobby`  
 Перед отправкой сообщений необходимо у созданного объекта вызвать метод 'ИнициализацияGitter' куда передать токен.
 
-####№ Пример:
+##### Пример:
 ```
     ИмяКомнаты = "organization/repo";  
     Мессенджер = Новый Мессенджер(); 
