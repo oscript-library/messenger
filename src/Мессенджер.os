@@ -5,6 +5,7 @@
 // Доступные варианты
 //	- Канал SLACK
 //	- SMS
+//	- Gitter
 //
 // (с) BIA Technologies, LLC	
 //
