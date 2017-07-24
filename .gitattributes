@@ -1,0 +1,3 @@
+*.os text eol=lf
+*.md text eol=lf
+*.config text eol=lf
