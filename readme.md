@@ -1,6 +1,6 @@
 # Отправка сообщений адресатам, используя разные транспорты
 
-[![GitHub release](https://img.shields.io/github/release/oscript-library/messenger.svg)](https://github.com/oscript-library/messenger)
+[![GitHub release](https://img.shields.io/github/release/bia-technologies/messenger.svg)](https://github.com/bia-technologies/messenger)
 
 ## Введение
 
